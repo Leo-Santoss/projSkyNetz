@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMasterPage.master.cs" Inherits="projSkyNetz.MainMasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyNetz</title>
+
+    <%-- Estilos --%>
+    <link href="~/View/Includes/Styles/styles.css" rel="stylesheet" type="text/css" runat="server" />
+
+    <%-- Ícone --%>
+    <link rel="shortcut icon" type="imagex/png" href="View/Includes/Images/Logo/Logo-branco-azul.ico">
+
+    <%-- Biblioteca de alertas --%>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="<%= ResolveUrl("~/View/Includes/Scripts/popup_alerts.js") %>"></script>
+
+    <%-- Scripts genéricos --%>
+    <script type="text/javascript" src="<%= ResolveUrl("~/View/Includes/Scripts/scripts.js") %>"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="loader" class="div-loader">
+        <img class="loader" src="<%= ResolveUrl("~/View/Includes/Images/loader.png") %>" alt="Carregando..."/>
+    </div>
+
+    <header class="header-nav"> 
+        <nav class="navbar">
+            <div class="logo-nav">
+                <a href="Index.aspx">
+                    <img class="logo-img-nav" src="<%= ResolveUrl("~/View/Includes/Images/Logo/Logo-branco.png") %>" alt="Logo SkyNetz"/>
+                </a>
+                <h1 class="logo-title-nav">SkyNetz</h1>
+            </div>
+            <ul class="button-list-nav">
+                <li><a href="Index.aspx" class="button-nav">Início</a></li>
+                <li><a href="Planos.aspx" class="button-nav">Planos</a></li>
+                <li><a href="Sobre.aspx" class="button-nav">Sobre</a></li>
+                <li><a href="Sobre.aspx" class="button-nav destaque">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </main>
+    <footer class="footer">
+        <h2>SkyNetz ®</h2>
+    </footer>
+</body>
+</html>
