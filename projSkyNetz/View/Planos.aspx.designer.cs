@@ -60,6 +60,15 @@ namespace projSkyNetz.View
         protected global::System.Web.UI.WebControls.TextBox txtDuracaoLigacao;
 
         /// <summary>
+        /// Controle ddlPlanoFaleMais.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPlanoFaleMais;
+
+        /// <summary>
         /// Controle btnCotar.
         /// </summary>
         /// <remarks>
@@ -67,5 +76,59 @@ namespace projSkyNetz.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCotar;
+
+        /// <summary>
+        /// Controle lblTarifaCotacao.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTarifaCotacao;
+
+        /// <summary>
+        /// Controle lblPlanoQueSeEncaixa.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPlanoQueSeEncaixa;
+
+        /// <summary>
+        /// Controle btnPlanoQueSeEncaixa.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPlanoQueSeEncaixa;
+
+        /// <summary>
+        /// Controle lblValorComFaleMais.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorComFaleMais;
+
+        /// <summary>
+        /// Controle lblValorSemFaleMais.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorSemFaleMais;
+
+        /// <summary>
+        /// Controle btnContratarPlano.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnContratarPlano;
     }
 }

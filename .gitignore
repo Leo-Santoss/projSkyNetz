@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+## Web.config contem a senha do banco, portanto ele nao esta no github
+web.config
+web.Debug.config
+web.Release.config
+
 # User-specific files
 *.rsuser
 *.suo
