@@ -242,9 +242,10 @@ namespace projSkyNetz.View
             }
 
             // Validação do campo de duração
-            if (string.IsNullOrEmpty(txtDuracaoLigacao.Text) && txtDuracaoLigacao.Text != "0")
+            if (string.IsNullOrEmpty(txtDuracaoLigacao.Text) || Convert.ToInt32(txtDuracaoLigacao.Text) < 1)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "swalComum('Aviso!', 'Digite a duração da ligação desejada para continuar.', 'warning');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "swalComum('Aviso!', 'Digite uma duração da ligação valida para continuar.', 'warning');", true);
+                txtDuracaoLigacao.Text = string.Empty;
                 return;
             }
 
