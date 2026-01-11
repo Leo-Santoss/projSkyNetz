@@ -1,4 +1,5 @@
-﻿using projSkyNetz.Model;
+﻿using projSkyNetz.DataDAO;
+using projSkyNetz.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,15 +42,17 @@ namespace projSkyNetz.View
         private void CarregarDadosDoPlano(int idPlano)
         {
             // Seleciona os dados do plano com o id recebido via parâmetro na URL
-            DataTable dt = new PlanosDAO().SelecionarUmPlano(idPlano);
+            PlanosModel planos = new PlanosModel();
+
+            planos = new PlanosDAO().SelecionarUmPlano(idPlano);
 
             // Preenche os dados do plano
-            if (dt != null && dt.Rows.Count > 0)
+            if (planos != null)
             {
-                lblTituloPlano.Text = dt.Rows[0]["NOME_PLANO"].ToString();
-                lblDetalhesPlano.Text = dt.Rows[0]["DETALHES_PLANO"].ToString();
-                lblMinutosPlano.Text = dt.Rows[0]["Minutos_PLANO"].ToString();
-                lblPrecoPlano.Text = dt.Rows[0]["PRECO_PLANO"].ToString();
+                lblTituloPlano.Text = planos.NomePlano;
+                lblDetalhesPlano.Text = planos.DetalhesPlano;
+                lblMinutosPlano.Text = planos.MinutosPlano;
+                lblPrecoPlano.Text = planos.PrecoPlano;
             }
             else
             {

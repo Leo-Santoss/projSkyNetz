@@ -1,33 +1,13 @@
 ﻿using Npgsql;
+using projSkyNetz.Model;
 using System;
 using System.Data;
 
-namespace projSkyNetz.Model
+namespace projSkyNetz.DataDAO
 {
     // Herda de DbConnection
     public class PlanosDAO : DbConnection
     {
-        public void teste()
-        {
-            try
-            {
-                OpenConnection(); 
-
-                string sql = "SELECT * FROM planos;";
-
-                NpgsqlCommand cmd = new NpgsqlCommand(sql, Connection);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex; 
-            }
-            finally
-            {
-                CloseConnection();
-            }
-        }
-
         #region Planos
         public DataTable SelecionarPlanos()
         {
@@ -59,10 +39,9 @@ namespace projSkyNetz.Model
                 CloseConnection();
             }
         }
-        public DataTable SelecionarUmPlano(int idPlano)
+        public PlanosModel SelecionarUmPlano(int idPlano)
         {
-            DataTable dt = new DataTable();
-
+            PlanosModel plano = null;
             try
             {
                 //Abre a conexão
@@ -75,12 +54,23 @@ namespace projSkyNetz.Model
                     cmd.Parameters.AddWithValue("id", idPlano);
 
                     // Converter o que retorna do banco pra DataTable com um adapter
-                    NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            plano = new PlanosModel();
 
-                    da.Fill(dt);
+                            // Preencho meu objeto com os dados do banco
+                            plano.Id = Convert.ToString(reader["ID"]);
+                            plano.NomePlano = Convert.ToString(reader["NOME_PLANO"]);        
+                            plano.MinutosPlano = Convert.ToString(reader["MINUTOS_PLANO"]);  
+                            plano.DetalhesPlano = Convert.ToString(reader["DETALHES_PLANO"]);
+                            plano.PrecoPlano = Convert.ToString(reader["PRECO_PLANO"]);      
+                        }
+                    }
                 }
 
-                return dt;
+                return plano;
             }
             catch (Exception ex)
             {

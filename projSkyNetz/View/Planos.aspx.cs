@@ -1,4 +1,4 @@
-﻿using projSkyNetz.Model;
+﻿using projSkyNetz.DataDAO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -180,6 +180,7 @@ namespace projSkyNetz.View
                     else
                     {
                         lblPlanoQueSeEncaixa.Text = $"Assine agora o plano <b>FaleMais {tempoCobertoPlano}</b> e aproveite os benefícios!";
+                        btnPlanoQueSeEncaixa.Visible = false;
                     }
                 }
 

@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Net; // Necessário para configurar o TLS 1.2
 
-namespace projSkyNetz.Model
+namespace projSkyNetz.DataDAO
 {
     public class DbConnection
     {
