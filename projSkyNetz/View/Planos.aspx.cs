@@ -1,4 +1,6 @@
 ﻿using projSkyNetz.DataDAO;
+using projSkyNetz.DataDAO.Tabelas;
+using projSkyNetz.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static projSkyNetz.DataDAO.Tabelas.DbLocais;
 
 namespace projSkyNetz.View
 {
@@ -23,16 +26,16 @@ namespace projSkyNetz.View
             #region planos
             try
             {
-                DataTable dt = new PlanosDAO().SelecionarPlanos();
+                List<PlanosModel> listaPlanos = new DbPlanos().SelecionarPlanos();
 
-                if(dt != null && dt.Rows.Count > 0)
+                if(listaPlanos != null && listaPlanos.Count > 0)
                 {
                     // Carrega o repeater para o usuário visualizar melhor os planos
-                    rptPlanos.DataSource = dt;
+                    rptPlanos.DataSource = listaPlanos;
                     rptPlanos.DataBind();
 
                     // Carrega o dropdownlist para realizar o cálculo
-                    ddlPlanoFaleMais.DataSource = dt;
+                    ddlPlanoFaleMais.DataSource = listaPlanos;
                     ddlPlanoFaleMais.DataBind();
                     ddlPlanoFaleMais.Items.Insert(0, new ListItem("Selecione", "-1") { Selected = true });
                 }
@@ -52,17 +55,17 @@ namespace projSkyNetz.View
             #region Combos
             try
             {
-                DataTable dt = new PlanosDAO().SelecionarCidades();
+                List<CidadeComboItem> lista = new DbLocais().SelecionarCidades();
 
-                if (dt != null && dt.Rows.Count > 0)
+                if (lista != null && lista.Count > 0)
                 {
                     // Origem
-                    ddlLocalOrigem.DataSource = dt;
+                    ddlLocalOrigem.DataSource = lista;
                     ddlLocalOrigem.DataBind();
                     ddlLocalOrigem.Items.Insert(0, new ListItem("Selecione", "-1") { Selected = true });
 
                     // Destino
-                    ddlLocalDestino.DataSource = dt;
+                    ddlLocalDestino.DataSource = lista;
                     ddlLocalDestino.DataBind();
                     ddlLocalDestino.Items.Insert(0, new ListItem("Selecione", "-1") { Selected = true });
                 }
@@ -100,8 +103,13 @@ namespace projSkyNetz.View
         private void ContratarPlano(string plano)
         {
             // Procuro o ID para ir para outra página
-            int idPlano = new PlanosDAO().SelecionarIdPlano(Convert.ToInt32(plano));
+            int idPlano = new DbPlanos().SelecionarIdPlano(Convert.ToInt32(plano));
 
+            if(idPlano == -1)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "swalComum('Erro!', 'Não foi encontrado o plano escolhido, entre em contato com a equipe SkyNetz ou tente novamente mais tarde.', 'error');", true);
+                return;
+            }
             // Troco para a página que permite assinar o plano passando o plano escolhido como parâmetro para apresentar as informações corretas na próxima página
             Response.Redirect($"ContratarPlano.aspx?ID_PLANO={idPlano}", false);
             Context.ApplicationInstance.CompleteRequest();
@@ -118,10 +126,8 @@ namespace projSkyNetz.View
             int dddOrigem = Convert.ToInt32(partesOrigem[0]);
             int dddDestino = Convert.ToInt32(partesDestino[0]);
 
-            // Método que recebe os dois DDD's, e faz a requisição da tarifa no banco
-
-            PlanosDAO dao = new PlanosDAO();
-            float tarifa = dao.BuscarTarifaPorDDD(dddOrigem, dddDestino);
+            // Consulta que recebe os dois DDD's, e faz a requisição da tarifa no banco
+            float tarifa = new DbTarifas().BuscarTarifaPorDDD(dddOrigem, dddDestino);
 
             // Caso não tenha encontrado a tarifa entre os locais indicados
             if (tarifa == -1) 

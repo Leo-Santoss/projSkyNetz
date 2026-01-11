@@ -44,14 +44,14 @@ namespace projSkyNetz.View
             // Seleciona os dados do plano com o id recebido via parâmetro na URL
             PlanosModel planos = new PlanosModel();
 
-            planos = new PlanosDAO().SelecionarUmPlano(idPlano);
+            planos = new DbPlanos().SelecionarUmPlano(idPlano);
 
             // Preenche os dados do plano
             if (planos != null)
             {
                 lblTituloPlano.Text = planos.NomePlano;
                 lblDetalhesPlano.Text = planos.DetalhesPlano;
-                lblMinutosPlano.Text = planos.MinutosPlano;
+                lblMinutosPlano.Text = planos.MinutosPlano.ToString();
                 lblPrecoPlano.Text = planos.PrecoPlano;
             }
             else

@@ -15,20 +15,20 @@
                         <asp:Repeater ID="rptPlanos" runat="server">
                             <ItemTemplate>
                                 <div class="card-plano">
-                                    <h1><%# Eval("NOME_PLANO") %></h1>
+                                    <h1><%# Eval("NomePlano") %></h1>
 
                                     <div>
-                                        <h2><%# Eval("MINUTOS_PLANO") %> minutos livres para qualquer DDD.</h2>
+                                        <h2><%# Eval("MinutosPlano") %> minutos livres para qualquer DDD.</h2>
 
                                         <br />
 
                                         <span class="preco-card-plano">
-                                            <%# Eval("PRECO_PLANO", "{0:C}") %>
+                                            <%# Eval("PrecoPlano", "{0:C}") %>
                                         </span>
 
                                         <br />
 
-                                        <asp:button ID="btnVerDetalhes" runat="server" class="button principal" style="font-size: 18px;" Text="Ver Mais" OnClick="btnVerDetalhes_Click" CommandArgument='<%# Eval("MINUTOS_PLANO") %>'></asp:button>
+                                        <asp:button ID="btnVerDetalhes" runat="server" class="button principal" style="font-size: 18px;" Text="Ver Mais" OnClick="btnVerDetalhes_Click" CommandArgument='<%# Eval("MinutosPlano") %>'></asp:button>
                                     </div>
                                 </div>
                             </ItemTemplate>
@@ -45,7 +45,7 @@
                                 <h3>Origem:</h3>
                             </div>
                             <div class="col-70" style="padding: 0;">
-                                <asp:DropDownList ID="ddlLocalOrigem" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="NOME" DataValueField="COD" OnSelectedIndexChanged="ddlLocal_SelectedIndexChanged" AutoPostBack="true" OnChange="mostrarLoading();"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlLocalOrigem" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="ItemNome" DataValueField="ItemValor" OnSelectedIndexChanged="ddlLocal_SelectedIndexChanged" AutoPostBack="true" OnChange="mostrarLoading();"></asp:DropDownList>
                             </div>
                         </div>
 
@@ -54,7 +54,7 @@
                                 <h3>Destino:</h3>
                             </div>
                             <div class="col-70" style="padding: 0;">
-                                <asp:DropDownList ID="ddlLocalDestino" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="NOME" DataValueField="COD" OnSelectedIndexChanged="ddlLocal_SelectedIndexChanged" AutoPostBack="true" OnChange="mostrarLoading();"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlLocalDestino" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="ItemNome" DataValueField="ItemValor" OnSelectedIndexChanged="ddlLocal_SelectedIndexChanged" AutoPostBack="true" OnChange="mostrarLoading();"></asp:DropDownList>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                 <h3>Duração da Ligação:</h3>
                             </div>
                             <div class="col-70" style="padding: 0;">
-                                <asp:TextBox ID="txtDuracaoLigacao" runat="server" TextMode="Number" CssClass="textbox" Style="width: 260px;" MaxLength="10" placeholder="Somente números"></asp:TextBox>
+                                <asp:TextBox ID="txtDuracaoLigacao" runat="server" oninput="filtroNumeros(this);" CssClass="textbox" Style="width: 260px;" MaxLength="5" placeholder="Somente números"></asp:TextBox>
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@
                                 <h3>Plano FaleMais:</h3>
                             </div>
                             <div class="col-70" style="padding: 0;">
-                                <asp:DropDownList ID="ddlPlanoFaleMais" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="NOME_PLANO" DataValueField="MINUTOS_PLANO" OnSelectedIndexChanged="ddlLocal_SelectedIndexChanged" AutoPostBack="true" OnChange="mostrarLoading();"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlPlanoFaleMais" runat="server" CssClass="dropdownlist" Style="width: 260px;" DataTextField="NomePlano" DataValueField="MinutosPlano"></asp:DropDownList>
                             </div>
                         </div>
                     </div>
@@ -137,6 +137,11 @@
         
         <%-- Scripts da página --%>
         <script>
+            // Filtro para poder digitas somente números
+            function filtroNumeros(input) {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+
             // Função para abrir o modal de cotação
             function openModalCotacao() {
                 const modal = document.getElementById("modalCotacao");
