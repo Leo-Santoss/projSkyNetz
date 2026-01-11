@@ -41,7 +41,7 @@
                 <li><a href="Index.aspx" class="button-nav">Início</a></li>
                 <li><a href="Planos.aspx" class="button-nav">Planos FaleMais</a></li>
                 <li><a href="Sobre.aspx" class="button-nav">Sobre</a></li>
-                <li><a href="Sobre.aspx" class="button-nav destaque">Login</a></li>
+                <%--<li><a href="Sobre.aspx" class="button-nav destaque">Login</a></li>--%>
             </ul>
         </nav>
     </header>
