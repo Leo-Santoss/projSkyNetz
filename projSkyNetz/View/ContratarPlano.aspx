@@ -47,7 +47,7 @@
                                         <h3>Email:</h3>
                                     </div>
                                     <div class="col-60" style="text-align:left; padding: 0;">
-                                        <asp:TextBox ID="txtEmailUsr" runat="server" CssClass="textbox" Style="width: 260px;" MaxLength="100" placeholder="Digite seu email" TextMode="Email"></asp:TextBox>
+                                        <asp:TextBox ID="txtEmailUsr" runat="server" CssClass="textbox" Style="width: 260px;" MaxLength="100" placeholder="Digite seu email"></asp:TextBox>
                                     </div>
                                 </div>
 

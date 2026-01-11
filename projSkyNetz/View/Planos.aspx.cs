@@ -214,7 +214,11 @@ namespace projSkyNetz.View
         protected void ddlLocal_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Valida se os locais não tem o mesmo ddd
-            if (ddlLocalOrigem.SelectedValue == ddlLocalDestino.SelectedValue)
+
+            string[] partesOrigem = ddlLocalOrigem.SelectedValue.Split('|');
+            string[] partesDestino = ddlLocalDestino.SelectedValue.Split('|');
+
+            if (partesOrigem[0] == partesDestino[0])
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "swalComum('Aviso!', 'Não é possível selecionar locais com o mesmo DDD.', 'warning');", true);
                 
