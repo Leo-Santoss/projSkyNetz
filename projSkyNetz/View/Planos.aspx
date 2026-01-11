@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainMasterPage.Master" AutoEventWireup="true" CodeBehind="Planos.aspx.cs" Inherits="projSkyNetz.View.Planos" %>
+﻿<%@ Page Title="Planos FaleMais" Language="C#" MasterPageFile="~/MainMasterPage.Master" AutoEventWireup="true" CodeBehind="Planos.aspx.cs" Inherits="projSkyNetz.View.Planos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -6,6 +6,7 @@
     <form id="form" method="post" runat="server">
         <div class="content">
 
+            <%-- Baner principal com os campos para realizar a cotação --%>
             <div class="banner-flex">
 
                 <%-- Planos --%>
@@ -17,7 +18,7 @@
                                     <h1><%# Eval("NOME_PLANO") %></h1>
 
                                     <div>
-                                        <h2><%# Eval("MINUTOS_PLANO") %> minutos livres para qualquer operadora.</h2>
+                                        <h2><%# Eval("MINUTOS_PLANO") %> minutos livres para qualquer DDD.</h2>
 
                                         <br />
 
@@ -27,9 +28,7 @@
 
                                         <br />
 
-                                        <button class="button principal" style="font-size: 18px;">
-                                            Ver Mais
-                                        </button>
+                                        <asp:button ID="btnVerDetalhes" runat="server" class="button principal" style="font-size: 18px;" Text="Ver Mais" OnClick="btnVerDetalhes_Click" CommandArgument='<%# Eval("MINUTOS_PLANO") %>'></asp:button>
                                     </div>
                                 </div>
                             </ItemTemplate>
@@ -64,7 +63,7 @@
                                 <h3>Duração da Ligação:</h3>
                             </div>
                             <div class="col-70" style="padding: 0;">
-                                <asp:TextBox ID="txtDuracaoLigacao" runat="server" TextMode="Number" CssClass="textbox" Style="width: 260px;" MaxLength="10"></asp:TextBox>
+                                <asp:TextBox ID="txtDuracaoLigacao" runat="server" TextMode="Number" CssClass="textbox" Style="width: 260px;" MaxLength="10" placeholder="Somente números"></asp:TextBox>
                             </div>
                         </div>
 
@@ -82,6 +81,7 @@
                 </div>
             </div>
 
+            <%-- Modal da cotação --%>
             <div id="modalCotacao" class="modal">
                 <div id="modalContent" class="conteudo-modal">
 
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <div style="text-align: center; margin-top:20px;">
-                                <asp:Button ID="btnContratarPlano" runat="server" CssClass="button principal" Text="Contratar Plano" OnClick="btnContratarPlano_Click" OnClientClick="mostrarLoading();" style="font-size: 18px; width: -webkit-fill-available;"></asp:Button>
+                                <asp:Button ID="btnContratarPlano" runat="server" CssClass="button principal" Text="Assinar Plano" OnClick="btnContratarPlano_Click" OnClientClick="mostrarLoading();" style="font-size: 18px; width: -webkit-fill-available;"></asp:Button>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,15 @@
             </div>
         </div>
 
+        <%-- Plano escolhido --%>
+        <asp:hiddenField ID="hdnPlanoEscolhido" runat="server" />
+
+        <%-- Plano que se encaixa melhor --%>
+        <asp:hiddenField ID="hdnPlanoEncaixaMelhor" runat="server" />
+        
+        <%-- Scripts da página --%>
         <script>
+            // Função para abrir o modal de cotação
             function openModalCotacao() {
                 const modal = document.getElementById("modalCotacao");
                 modal.style.display = "flex";
@@ -138,7 +146,7 @@
                 }, 10);
             }
 
-
+            // Função para fechar o modal de cotação
             function closeModalCotacao() {
                 const modal = document.getElementById("modalCotacao");
                 modal.classList.remove("show");

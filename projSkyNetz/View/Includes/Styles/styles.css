@@ -211,6 +211,7 @@ main {
     border-radius: 5px;
     text-decoration: none;
     border: none;
+    cursor:pointer;
 }
 
     .button.principal {
@@ -490,6 +491,46 @@ main {
     margin-top: 10px;
 }
 
+/* Banner de assinoar*/
+.banner-assinar {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.detalhes-assinar {
+    border-right: 1px dotted lightgray;
+}
+
+.banner-logo {
+    width: 400px;
+}
+
+.banner-assinar .titulo-plano {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #066699;
+    margin-bottom: 10px;
+}
+
+.banner-assinar .preco-plano {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #066699;
+    display: block;
+    margin-top: 10px;
+}
+
+    .banner-assinar .preco-plano::after {
+        content: "/mês";
+        font-size: 14px;
+        color: #999;
+        font-weight: normal;
+        display: block;
+    }
+
+.btn-assinar {
+    width: 300px;
+}
 /* --- Responsivdade dos banners --- */
 @media (max-width: 768px) {
     .banner-flex {
@@ -498,6 +539,18 @@ main {
 
     .banner-item {
         width: 100%;
+    }
+
+    .banner-logo {
+        width: 100%;
+    }
+
+    .btn-assinar {
+        width: 250px;
+    }
+
+    .detalhes-assinar {
+        border-right: none;
     }
 }
 

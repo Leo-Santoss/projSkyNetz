@@ -28,6 +28,7 @@ namespace projSkyNetz.Model
             }
         }
 
+        #region Planos
         public DataTable SelecionarPlanos()
         {
             DataTable dt = new DataTable();
@@ -58,7 +59,75 @@ namespace projSkyNetz.Model
                 CloseConnection();
             }
         }
+        public DataTable SelecionarUmPlano(int idPlano)
+        {
+            DataTable dt = new DataTable();
 
+            try
+            {
+                //Abre a conexão
+                OpenConnection();
+
+                string sql = "SELECT * FROM planos WHERE ID = @id";
+
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, Connection))
+                {
+                    cmd.Parameters.AddWithValue("id", idPlano);
+
+                    // Converter o que retorna do banco pra DataTable com um adapter
+                    NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
+
+                    da.Fill(dt);
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                // Independente do que acontecer, fecha a conexão
+                CloseConnection();
+            }
+        }
+        public int SelecionarIdPlano(int Plano)
+        {
+            int id = -1;
+            try
+            {
+                OpenConnection();
+
+                // Select com os filtros
+                string sql = "SELECT ID FROM planos WHERE MINUTOS_PLANO = @minutos_plano";
+
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, Connection))
+                {
+                    cmd.Parameters.AddWithValue("minutos_plano", Plano);
+
+                    object resultado = cmd.ExecuteScalar();
+
+                    // Verifica se o resultado é válido
+                    if (resultado != null && resultado != DBNull.Value)
+                    {
+                        id = Convert.ToInt32(resultado);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            return id;
+        }
+        #endregion
+
+        #region Cidades
         public DataTable SelecionarCidades()
         {
             DataTable dt = new DataTable();
@@ -69,7 +138,9 @@ namespace projSkyNetz.Model
                 OpenConnection();
 
                 // Select concatenando o DDD no nome para ficar mais fácil de visualizar as informações no dropdown
-                string sql = "SELECT NOME_LOCAL || ' (DDD ' || NUM_DDD_LOCAL || ')' AS NOME, NUM_DDD_LOCAL AS COD FROM locais ORDER BY NUM_DDD_LOCAL";
+                // Além do nome, precisei concatenar o id único no DDD pois itens com values iguais causam um problema,
+                // pois ao selecionar qualquer item na lista como um DDD x, ele sempre vai "escolher" o primeiro item o esse DDD x na lista
+                string sql = "SELECT NOME_LOCAL || ' (DDD ' || NUM_DDD_LOCAL || ')' AS NOME, NUM_DDD_LOCAL || '|' || ID AS COD FROM locais ORDER BY NUM_DDD_LOCAL";
 
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, Connection);
 
@@ -90,7 +161,9 @@ namespace projSkyNetz.Model
                 CloseConnection();
             }
         }
+        #endregion
 
+        #region Tarifas
         public DataTable SelecionarTarifas()
         {
             DataTable dt = new DataTable();
@@ -121,7 +194,6 @@ namespace projSkyNetz.Model
                 CloseConnection();
             }
         }
-
         public float BuscarTarifaPorDDD(int dddOrigem, int dddDestino)
         {
             float preco = -1;
@@ -156,5 +228,6 @@ namespace projSkyNetz.Model
             }
             return preco;
         }
+        #endregion
     }
 }

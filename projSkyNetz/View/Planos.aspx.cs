@@ -92,14 +92,31 @@ namespace projSkyNetz.View
             lblPlanoQueSeEncaixa.Text = string.Empty;
             lblValorComFaleMais.Text = string.Empty;
             lblValorSemFaleMais.Text = string.Empty;
+
+            // HiddenFields
+            hdnPlanoEscolhido.Value = string.Empty;
+            hdnPlanoEncaixaMelhor.Value = string.Empty;
+        }
+        private void ContratarPlano(string plano)
+        {
+            // Procuro o ID para ir para outra página
+            int idPlano = new PlanosDAO().SelecionarIdPlano(Convert.ToInt32(plano));
+
+            // Troco para a página que permite assinar o plano passando o plano escolhido como parâmetro para apresentar as informações corretas na próxima página
+            Response.Redirect($"ContratarPlano.aspx?ID_PLANO={idPlano}", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
 
         #region Cálculos
         private float RetornaTarifa()
         {
-            int dddOrigem = Convert.ToInt32(ddlLocalOrigem.SelectedValue);
-            int dddDestino = Convert.ToInt32(ddlLocalDestino.SelectedValue);
+            // Retiro o separador dos values dos itens selecionados para pegar somente o DDD
+            string[] partesOrigem = ddlLocalOrigem.SelectedValue.Split('|');
+            string[] partesDestino = ddlLocalDestino.SelectedValue.Split('|');
+
+            int dddOrigem = Convert.ToInt32(partesOrigem[0]);
+            int dddDestino = Convert.ToInt32(partesDestino[0]);
 
             // Método que recebe os dois DDD's, e faz a requisição da tarifa no banco
 
@@ -110,6 +127,7 @@ namespace projSkyNetz.View
             if (tarifa == -1) 
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "swalComum('Aviso!', 'Não foi encontrada a tarifa para esta combinação de DDD`s.', 'warning');", true);
+                LimparCampos();
                 return 0;
             }
 
@@ -136,7 +154,7 @@ namespace projSkyNetz.View
             float valorSemFaleMais = tarifa * tempoDigitado;
 
             // Se o tempo digitado não for coberto pelo plano escolhido, subtrai o excesso e faz a multiplicação, se não, mantém o valor definido na declaração da variável
-            if (tempoCobertoPlano < tempoDigitado)
+            if (tempoCobertoPlano <= tempoDigitado)
             {
                 int tempoNaoCoberto = tempoDigitado - tempoCobertoPlano;
 
@@ -145,17 +163,23 @@ namespace projSkyNetz.View
 
                 // Já que o tempo digitado é maior que o do plano selecionado, verificar se ele se encaixa em outro plano
                 // O código vai passar por todos os planos e ver se algum se encaixa
-
-
                 foreach(ListItem item in ddlPlanoFaleMais.Items)
                 {
-                    int valorItem = Convert.ToInt32(item.Value);
+                    // Retiro o separador dos values dos itens selecionados para pegar somente o DDD
+                    string[] partesItem = item.Value.Split('|');
+                    int valorItem = Convert.ToInt32(partesItem[0]);
 
-                    if (tempoDigitado < valorItem)
+                    if (tempoDigitado <= valorItem)
                     {
                         lblPlanoQueSeEncaixa.Text = $"O plano atual não cobre tudo. Sugerimos o plano <b> {item.Text} </b> que atenderia melhor sua necessidade.";
+                        // Salvo o plano que se encaixa melhor caso o usuário escolha ele
+                        hdnPlanoEncaixaMelhor.Value = valorItem.ToString();
                         btnPlanoQueSeEncaixa.Visible = true;
                         break;
+                    }
+                    else
+                    {
+                        lblPlanoQueSeEncaixa.Text = $"Assine agora o plano <b>FaleMais {tempoCobertoPlano}</b> e aproveite os benefícios!";
                     }
                 }
 
@@ -163,7 +187,7 @@ namespace projSkyNetz.View
             else
             {
                 // Caso o plano selecionado cubra o valor da ligação
-                lblPlanoQueSeEncaixa.Text = $"Boa notícia! O plano selecionado cobre o valor da ligação cotada. Contrate agora e aproveite os benefícios do <b>FaleMais {tempoCobertoPlano}</b>!";
+                lblPlanoQueSeEncaixa.Text = $"Boa notícia! O plano selecionado cobre o valor da ligação cotada. Assine agora e aproveite os benefícios do <b>FaleMais {tempoCobertoPlano}</b>!";
                 btnPlanoQueSeEncaixa.Visible = false;
             }
 
@@ -220,6 +244,9 @@ namespace projSkyNetz.View
                 return;
             }
 
+            // Salvo o plano escolhido caso o usuário queira assina-lo
+            hdnPlanoEscolhido.Value = ddlPlanoFaleMais.SelectedValue;
+
             RetornaCalculoValorPorTempo();
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "esconderLoading", "esconderLoading();", true);
@@ -227,11 +254,24 @@ namespace projSkyNetz.View
         }
         protected void btnPlanoQueSeEncaixa_Click(object sender, EventArgs e)
         {
-
+            // Executo o método para ir para outra página
+            ContratarPlano(hdnPlanoEncaixaMelhor.Value);
         }
         protected void btnContratarPlano_Click(object sender, EventArgs e)
         {
+            // Executo o método para ir para outra página
+            ContratarPlano(hdnPlanoEscolhido.Value);
+        }
+        protected void btnVerDetalhes_Click(object sender, EventArgs e)
+        {
+            // Procuro o botão que foi acionado
+            Button btn = (Button)sender;
 
+            // Pega o argumento passado
+            string minutosPlano = btn.CommandArgument;
+
+            // Executo o método para ir para outra página
+            ContratarPlano(minutosPlano);
         }
         #endregion
 

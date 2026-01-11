@@ -107,6 +107,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="View\ContratarPlano.aspx" />
     <Content Include="View\Includes\Images\loader.png" />
     <Content Include="View\Includes\Images\Logo\Logo-azul-branco.png" />
     <Content Include="View\Includes\Images\Logo\Logo-azul.png" />
@@ -133,6 +134,13 @@
     <Compile Include="Model\DbConnection.cs" />
     <Compile Include="Model\Planos\PlanosDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\ContratarPlano.aspx.cs">
+      <DependentUpon>ContratarPlano.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ContratarPlano.aspx.designer.cs">
+      <DependentUpon>ContratarPlano.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -166,7 +174,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controller\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
