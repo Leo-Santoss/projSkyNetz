@@ -7,7 +7,7 @@ Neste projeto eu utilizei as seguintes tecnologias:
 * **ASP.NET 4.6** com WebForms
 * **Entity Framework** (utilizando Repository Pattern)
 * **JavaScript**
-* **PostgreSQL** (Banco na nuvem via NeonDB)
+* **PostgreSQL** (Banco na AWS via NeonDB)
 * **Git** e **GitHub**
 
 O site é composto por 4 telas:
