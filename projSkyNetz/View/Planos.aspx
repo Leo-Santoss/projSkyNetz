@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                    <asp:Button ID="btnCotar" runat="server" CssClass="button principal" Text="Cotar" OnClick="btnCotar_Click" OnClientClick="mostrarLoading();" Style="font-size: 18px;"></asp:Button>
+                    <asp:Button ID="btnCotar" runat="server" CssClass="button principal" Text="Calcular" OnClick="btnCotar_Click" OnClientClick="mostrarLoading();" Style="font-size: 18px;"></asp:Button>
 
                 </div>
             </div>
