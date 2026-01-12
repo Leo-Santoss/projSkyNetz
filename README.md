@@ -1,35 +1,33 @@
+# SkyNetz - Simulador de Planos de Telefonia
+
 Olá!
 
 Neste projeto eu utilizei as seguintes tecnologias:
 
-. ASP.NET 4.6 com WebForms
-. Entity Framework com Repository Pattern
-. Javascript
-. PostgreSQL - Banco na AWS - hospedado no site NeonDB
-. Git e GitHub
+* **ASP.NET 4.6** com WebForms
+* **Entity Framework** (utilizando Repository Pattern)
+* **JavaScript**
+* **PostgreSQL** (Banco na nuvem via NeonDB)
+* **Git** e **GitHub**
 
+O site é composto por 4 telas:
 
-O Site tem 4 telas, sendo elas:
+* **Index:** Apresentação inicial do projeto.
+* **Planos:** Apresenta uma listagem dos planos disponíveis e a seção para calcular o valor da ligação.
+* **ContratarPlano:** Exibe o plano escolhido e um formulário para assiná-lo.
+* **Sobre:** Página informativa sobre o sistema.
 
-. Index: Apresentação inicial do projeto
-. Planos: Apresenta uma listagem dos planos e a aba de calcular o valor da ligação
-. ContratarPlano: Apresenta o plano escolhido e um formulário para assiná-lo
-. Sobre: Página informativa.
+Na tela de Planos, onde se encontra a principal funcionalidade do projeto, temos um formulário para simular a ligação desejada:
 
-Na tela de Planos, onde se encontra a principal funcionalidade do projeto, temos um formulário simples com os campos para simular a ligação que você quer calcular:
+* **Origem:** Selecione o DDD de origem.
+* **Destino:** Selecione o DDD de destino.
+* **Duração:** Digite a duração da ligação em minutos.
+* **Plano:** Selecione o plano FaleMais que deseja simular.
 
-. Origem: Selecione a origem da ligação
-. Destino:  Selecione o destino da ligação
-. Duração: Digite a duração da ligação
-. Plano: Selecione o plano que você quer simular
+Ao clicar no botão "Calcular", um pop-up exibirá as seguintes informações:
 
-Clicando no botão "Calcular", você verá um pop-up que contará com as informações:
-
-. Tarifa base por minuto entre os DDD's selecionados
-. Indicação se o plano selecionado é o ideal para a sua ligação (caso você escolha uma duração que se encaixe melhor em outro plano, o sistema irá te indicar)
-. Valor com o plano FaleMais
-. Valor sem o plano FaleMais
-. Botão para assinar o plano (irá te levar para uma tela com mais detalhes do plano)
-
-
-Leonardo Dias dos Santos
+* A tarifa base por minuto entre os DDDs selecionados.
+* Indicação se o plano selecionado é o ideal (o sistema sugere a melhor opção caso a duração se encaixe melhor em outro plano).
+* O valor final **com** o plano FaleMais.
+* O valor final **sem** o plano FaleMais.
+* Botão para assinar o plano (redireciona para a tela de contratação com os detalhes).
